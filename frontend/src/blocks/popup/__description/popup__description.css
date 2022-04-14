@@ -1,0 +1,18 @@
+.popup__description {
+  border-bottom: 1px solid #D6D6D6;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin: 0 36px 16px 36px;
+  color: black;
+  line-height: 1.69;
+  font-size: 14px;
+  padding-bottom: 6px;
+}
+
+@media (max-width: 766px) {
+  .popup__description {
+    margin-left: 22px;
+    margin-right: 22px;
+  }
+}
