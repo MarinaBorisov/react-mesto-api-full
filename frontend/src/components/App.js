@@ -32,28 +32,48 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    token && auth.checkToken(token)
-      .then((res) => {
+    api
+    .getUserInfo()
+    .then(({ user }) => {
+      if (user._id) {
         setLoggedIn(true);
-        setEmail(res.data.email);
+        setEmail(user.email);
         history.push('/');
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, []);
+      }
+    })
+    .catch(() => {
+      setLoggedIn(false);
+    });
+  }, [history]);
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setCurrentUser(user);
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (loggedIn) {
+      api.getUserInfo()
+        .then(({ user }) => {
+          setCurrentUser({
+            name: user.name,
+            about: user.about,
+            avatar: user.avatar,
+            _id: user._id,
+          })
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      api.getInitialCards()
+        .then((card) => {
+          setCards(card.reverse())
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -136,8 +156,9 @@ function App() {
   }
 
   function handleRegister(data) {
-    auth.register(data)
-      .then((res) => {
+    auth
+      .register(data.password, data.email)
+      .then(() => {
         setIsRegistered(true);
         setIsInfoTooltipOpen(true);
         history.push('/sign-in');
@@ -146,26 +167,27 @@ function App() {
         setIsRegistered(false);
         setIsInfoTooltipOpen(true);
         console.log(err);
-      });
+      });      
   }
 
   function handleSignOut() {
+    auth.logOut();
     setLoggedIn(false);
-    setEmail('');
-    localStorage.removeItem('token');
+    history.push("/");    
   }
 
   function handleLogin(data) {
-    auth.login(data)
-      .then((res) => {
-        setEmail(data.email);
-        setLoggedIn(true);
-        localStorage.setItem('token', res.token);
-        history.push('/');
+    auth
+      .login(data.password, data.email)
+      .then(() => {
+        setEmail(data.email)
+        setLoggedIn(true)
+        history.push("/");
       })
       .catch((err) => {
-        console.log(err);
-      })
+
+        console.log(err)
+      });      
   }
 
   return (

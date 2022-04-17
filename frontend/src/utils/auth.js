@@ -15,6 +15,7 @@ class Auth {
 
   register(data) {
     return fetch(`${this._baseUrl}/signup`, {
+      credentials: 'include',
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data)
@@ -24,29 +25,30 @@ class Auth {
 
   login(data) {
     return fetch(`${this._baseUrl}/signin`, {
+      credentials: 'include',
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data)
     })
     .then(this._checkResponse);
   }
-
-  checkToken(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}}`,
-        ...this._headers
-       },
+  
+  logOut() {
+    return fetch(`${this._baseUrl}/signout`, {
+      credentials: 'include',
+      method: 'DELETE',
+      headers: this._headers,
     })
-    .then(this._checkResponse);
-  }
+      .then(this._checkResponse)
+  };
+
 }
 
 const auth = new Auth({
   baseUrl: url,
   headers: {
-    'Content-Type': 'application/json'
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
   }
 });
 

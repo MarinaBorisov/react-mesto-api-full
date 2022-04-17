@@ -8,5 +8,5 @@ export const validationSettings =
   errorClass: 'popup__input-error_active'
 }
 
-export const url = 'https://api.moretz.nomoredomains.work/';
+export const url = 'https://api.moretz.nomoredomains.work';
 

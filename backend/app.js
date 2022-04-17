@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const NotFoundError = require('./errorModules/notFound');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -19,6 +19,16 @@ const { PORT = 3000 } = process.env;
 
 app.use(cookieParser());
 app.use(cors());
+app.use(cors({
+  origin: [
+    'http://api.moretz.nomoredomains.work/',
+    'https://api.moretz.nomoredomains.work/',
+    'http://moretz.nomoredomains.work/',
+    'https://moretz.nomoredomains.work/',
+    'http://localhost:3000',
+  ],
+  credentials: true,
+}));
 
 const { routerCard } = require('./routes/cards');
 const { routerUsers } = require('./routes/users');
@@ -52,6 +62,8 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
   }),
 }), createUser);
+
+app.delete('/signout', logout);
 
 app.use('/cards', auth, routerCard);
 app.use('/users', auth, routerUsers);

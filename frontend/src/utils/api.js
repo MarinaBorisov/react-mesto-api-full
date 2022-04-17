@@ -14,113 +14,103 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}users/me`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+    return fetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include', 
+      method: 'GET',    
+      headers: this._headers
     })
-    .then(this._handleResponse);
-  }
+      .then(this._handleResponse);
+  };
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}cards`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+    return fetch(`${this._baseUrl}/cards`, {
+      credentials: 'include',
+      method: 'GET',
+      headers: this._headers
     })
-    .then(this._handleResponse);
-  }
+      .then(this._handleResponse);
+  };
 
-  setUserInfo(userData) {
-    return fetch(`${this._baseUrl}users/me`, {
+  setUserInfo(data) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
       method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
-      body: JSON.stringify(userData)
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about
+      })
     })
-    .then(this._handleResponse);
-  }
+      .then(this._handleResponse);
+  };
 
   createCard(newCard) {
-    return fetch(`${this._baseUrl}cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
+      credentials: 'include', 
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
-      body: JSON.stringify(newCard)
+      headers: this._headers,
+      body: JSON.stringify({
+        name: newCard.name,
+        link: newCard.link
+      })
     })
-    .then(this._handleResponse);
-  }
+      .then(this._handleResponse);
+  };
 
   deleteCard(id) {
-    return fetch(`${this._baseUrl}cards/${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+      credentials: 'include', 
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+      headers: this._headers,
     })
-    .then(this._handleResponse);
-  }
+      .then(this._handleResponse);
+  };
 
   likeCard(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      credentials: 'include',
       method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+      headers: this._headers,
     })
     .then(this._handleResponse);
   }
 
   dislikeCard(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      credentials: 'include',
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+      headers: this._headers,
     })
     .then(this._handleResponse);
   }
 
   changeLikeCardStatus(id, isLikeNeeded) {
     if (isLikeNeeded) {
-      return fetch(`${this._baseUrl}cards/likes/${id}`, {
+      return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+        credentials: 'include',
         method: 'PUT',
-        headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+        headers: this._headers,
       })
       .then(this._handleResponse);
     }
     else {
-      return fetch(`${this._baseUrl}cards/likes/${id}`, {
+      return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+        credentials: 'include',
         method: 'DELETE',
-        headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
+        headers: this._headers,
       })
       .then(this._handleResponse);
     }
   }
 
-  setUserAvatar(avatar) {
-    return fetch(`${this._baseUrl}users/me/avatar`, {
+  setUserAvatar(data) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      credentials: 'include',
       method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        ...this._headers
-       },
-      body: JSON.stringify(avatar),
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatar
+      }),
     })
     .then(this._handleResponse);
   }
@@ -130,7 +120,8 @@ class Api {
 const api = new Api({
   baseUrl: url,
   headers: {
-    'Content-Type': 'application/json'
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
   }
 });
 
