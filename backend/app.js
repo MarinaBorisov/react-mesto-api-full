@@ -21,10 +21,10 @@ app.use(cookieParser());
 app.use(cors());
 app.use(cors({
   origin: [
-    'http://api.moretz.nomoredomains.work/',
-    'https://api.moretz.nomoredomains.work/',
-    'http://moretz.nomoredomains.work/',
-    'https://moretz.nomoredomains.work/',
+    'http://api.moretz.nomoredomains.work',
+    'https://api.moretz.nomoredomains.work',
+    'http://moretz.nomoredomains.work',
+    'https://moretz.nomoredomains.work',
     'http://localhost:3000',
   ],
   credentials: true,
