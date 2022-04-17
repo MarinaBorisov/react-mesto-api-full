@@ -9,16 +9,21 @@ const NotFoundError = require('./errorModules/notFound');
 const { login, createUser, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
 const { linkValidator } = require('./validators/linkValidator');
 
 const ERROR_DEFAULT = 500;
 
 const app = express();
+
 const { PORT = 3000 } = process.env;
 
+mongoose.connect('mongodb://localhost:27017/mestodb', {});
+
 app.use(cookieParser());
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(requestLogger);
+
 app.use(cors({
   origin: [
     'http://api.moretz.nomoredomains.work',
@@ -32,13 +37,6 @@ app.use(cors({
 
 const { routerCard } = require('./routes/cards');
 const { routerUsers } = require('./routes/users');
-
-mongoose.connect('mongodb://localhost:27017/mestodb', {});
-
-app.use(requestLogger);
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.get('/crash-test', () => {
   setTimeout(() => {
