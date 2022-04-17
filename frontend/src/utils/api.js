@@ -1,4 +1,4 @@
-import {url, token} from './utils';
+import {url} from './utils';
 
 class Api {
   constructor({baseUrl, headers}) {
@@ -15,14 +15,20 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
     })
     .then(this._handleResponse);
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
     })
     .then(this._handleResponse);
   }
@@ -30,7 +36,10 @@ class Api {
   setUserInfo(userData) {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
       body: JSON.stringify(userData)
     })
     .then(this._handleResponse);
@@ -39,7 +48,10 @@ class Api {
   createCard(newCard) {
     return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
       body: JSON.stringify(newCard)
     })
     .then(this._handleResponse);
@@ -48,7 +60,10 @@ class Api {
   deleteCard(id) {
     return fetch(`${this._baseUrl}cards/${id}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
     })
     .then(this._handleResponse);
   }
@@ -56,7 +71,10 @@ class Api {
   likeCard(id) {
     return fetch(`${this._baseUrl}cards/likes/${id}`, {
       method: 'PUT',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
     })
     .then(this._handleResponse);
   }
@@ -64,7 +82,10 @@ class Api {
   dislikeCard(id) {
     return fetch(`${this._baseUrl}cards/likes/${id}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
     })
     .then(this._handleResponse);
   }
@@ -73,14 +94,20 @@ class Api {
     if (isLikeNeeded) {
       return fetch(`${this._baseUrl}cards/likes/${id}`, {
         method: 'PUT',
-        headers: this._headers,
+        headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
       })
       .then(this._handleResponse);
     }
     else {
       return fetch(`${this._baseUrl}cards/likes/${id}`, {
         method: 'DELETE',
-        headers: this._headers,
+        headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
       })
       .then(this._handleResponse);
     }
@@ -89,7 +116,10 @@ class Api {
   setUserAvatar(avatar) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        ...this._headers
+       },
       body: JSON.stringify(avatar),
     })
     .then(this._handleResponse);
@@ -100,7 +130,6 @@ class Api {
 const api = new Api({
   baseUrl: url,
   headers: {
-    authorization: token,
     'Content-Type': 'application/json'
   }
 });

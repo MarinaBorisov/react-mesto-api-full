@@ -1,0 +1,21 @@
+.header__button {
+  background-color: transparent;
+  color: #A9A9A9;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+  text-align: right;
+  line-height: 22px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+
+@media (max-width: 440px) {
+  .header__button {
+    font-size: 14px;
+  }
+}

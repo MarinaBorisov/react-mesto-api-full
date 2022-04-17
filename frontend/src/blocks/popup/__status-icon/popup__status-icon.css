@@ -1,0 +1,5 @@
+.popup__status-icon {
+  display: flex;
+  margin: 34px auto 32px;
+  border-style: none;
+}

@@ -1,0 +1,27 @@
+.auth__input {
+  background-color: black;
+  width: 100%;
+  line-height: 17px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: inherit;
+  border: 0;
+  padding: 0;
+  padding-bottom: 13px;
+  border-bottom: 2px solid rgb(204, 204, 204);
+  color: #ccc;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.auth__input:focus {
+  outline: none;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.auth__input::placeholder {
+  color: #ccc;
+}
+
+.auth__input:last-of-type {
+  padding-top: 30px;
+}

@@ -1,0 +1,23 @@
+.auth__save {
+  margin-top: 173px;
+  border-radius: 2px;
+  padding: 14px 0 14px 0;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: #000;
+  background-color: #fff;
+  width: 100%;
+  cursor: pointer;
+}
+
+.auth__save:hover {
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 768px) {
+  .auth__save {
+    margin-top: 216px;
+    font-size: 18px;
+  }
+}

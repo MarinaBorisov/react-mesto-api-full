@@ -8,6 +8,7 @@ const NotFoundError = require('./errorModules/notFound');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 const { linkValidator } = require('./validators/linkValidator');
 
@@ -17,6 +18,7 @@ const app = express();
 const { PORT = 3000 } = process.env;
 
 app.use(cookieParser());
+app.use(cors);
 
 const { routerCard } = require('./routes/cards');
 const { routerUsers } = require('./routes/users');
