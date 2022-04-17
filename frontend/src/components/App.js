@@ -178,7 +178,7 @@ function App() {
 
   function handleLogin(data) {
     auth
-      .login(data.password, data.email)
+      .login(data)
       .then(() => {
         setEmail(data.email)
         setLoggedIn(true)
