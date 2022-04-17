@@ -34,10 +34,10 @@ function App() {
   React.useEffect(() => {
     api
     .getUserInfo()
-    .then(({ user }) => {
-      if (user._id) {
+    .then(({ email, _id }) => {
+      if (_id) {
         setLoggedIn(true);
-        setEmail(user.email);
+        setEmail(email);
         history.push('/');
       }
     })
@@ -49,12 +49,12 @@ function App() {
   React.useEffect(() => {
     if (loggedIn) {
       api.getUserInfo()
-        .then(({ user }) => {
+        .then(({ about, avatar, name, _id }) => {
           setCurrentUser({
-            name: user.name,
-            about: user.about,
-            avatar: user.avatar,
-            _id: user._id,
+            name: name,
+            about: about,
+            avatar: avatar,
+            _id: _id,
           })
         })
         .catch((err) => {

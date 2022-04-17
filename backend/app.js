@@ -62,7 +62,6 @@ app.post('/signup', celebrate({
 }), createUser);
 
 app.delete('/signout', logout);
-app.disable('etag');
 app.use('/cards', auth, routerCard);
 app.use('/users', auth, routerUsers);
 
