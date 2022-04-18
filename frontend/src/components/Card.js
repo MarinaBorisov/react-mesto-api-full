@@ -9,7 +9,7 @@ function Card(props) {
     `elements__trash ${isOwn ? 'elements__trash_visible' : 'elements__trash_hidden'}`
   );
 
-  const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+  const isLiked = props.card.likes.some(i => i === currentUser._id);
   const cardLikeButtonClassName = (
     `elements__like-button ${isLiked && 'elements__like-button_active'}`
   );
