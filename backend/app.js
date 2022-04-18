@@ -61,7 +61,7 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.delete('/signout', logout);
+app.delete('/signout', auth, logout);
 app.use('/cards', auth, routerCard);
 app.use('/users', auth, routerUsers);
 
@@ -78,20 +78,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send(
     { message: statusCode === ERROR_DEFAULT ? 'На сервере произошла ошибка' : message },
   );
-  next();
-});
-
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
-
   next();
 });
 

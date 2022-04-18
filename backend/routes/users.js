@@ -10,7 +10,9 @@ const { linkValidator } = require('../validators/linkValidator');
 Joi.objectId = require('joi-objectid')(Joi);
 
 routerUsers.get('/', getAllUsers);
+
 routerUsers.get('/me', getCurrentUser);
+
 routerUsers.get('/:_id', celebrate({
   params: Joi.object().keys({
     _id: Joi.objectId(),
@@ -23,6 +25,7 @@ routerUsers.patch('/me', celebrate({
     about: Joi.string().required().min(2).max(30),
   }),
 }), editUserInfo);
+
 routerUsers.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().required().custom(linkValidator),

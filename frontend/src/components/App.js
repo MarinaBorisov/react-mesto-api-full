@@ -157,7 +157,7 @@ function App() {
 
   function handleRegister(data) {
     auth
-      .register(data.password, data.email)
+      .register(data)
       .then(() => {
         setIsRegistered(true);
         setIsInfoTooltipOpen(true);
