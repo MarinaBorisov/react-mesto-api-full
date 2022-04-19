@@ -65,13 +65,13 @@ app.delete('/signout', auth, logout);
 app.use('/cards', auth, routerCard);
 app.use('/users', auth, routerUsers);
 
-app.use(errorLogger);
-
-app.use(errors());
-
 app.use('/', auth, (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
+
+app.use(errorLogger);
+
+app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = ERROR_DEFAULT, message } = err;
